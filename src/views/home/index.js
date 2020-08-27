@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import {Table} from 'antd';
+import "./index.css";
 
 export default class HomeComponent extends React.Component {
     constructor(props){
@@ -53,7 +54,7 @@ export default class HomeComponent extends React.Component {
             }
         ];
         return (
-            <div>
+            <div className="row" style={{ "padding-left": "100px", "padding-right": "100px"}}>
                 <Table
                     dataSource={this.state.messages}
                     rowKey={record => record._key}
