@@ -1,26 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import HomeComponent from '../src/views/home';
+import FormComponent from '../src/views/form';
+import 'antd/dist/antd.css';
+import firebase from 'firebase';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends React.Component {
+    constructor(props){
+        super(props);
+        const config = {
+            apiKey: "AIzaSyDu1sPqRJZzKDW_yqo5nxWsa8qF1ogtZcc",
+            authDomain: "test-build-4f101.firebaseapp.com",
+            databaseURL: "https://test-build-4f101.firebaseio.com",
+            projectId: "test-build-4f101",
+            storageBucket: "test-build-4f101.appspot.com",
+            messagingSenderId: "243255327820",
+            appId: "1:243255327820:web:68343ed84a981bdbc3c8e9"
+    };
+        firebase.initializeApp(config);
+    }
+
+    render() {
+        return (
+            <div>
+                <HomeComponent db={firebase}/>
+                <FormComponent db={firebase}/>
+            </div>
+        )
+    }
 }
-
-export default App;
