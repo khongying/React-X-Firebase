@@ -1,15 +1,23 @@
 import React from 'react';
-import { Form, Input, Button, InputNumber } from 'antd';
+import { Form, Input, Button } from 'antd';
+import firebase from "../../firebase";
 
-export default class FormComponent extends React.Component {
+export default class LoginComponent extends React.Component {
     formRef = React.createRef();
     constructor(props) {
         super(props);
     }
     onFinish = values => {
-        let dbCon = this.props.firebase.database().ref('/user');
-        dbCon.push(values)
-        this.onReset();
+        console.log(values)
+        // this.props.firebase.auth()
+     this.props.firebase.auth()
+         .signInWithEmailAndPassword(values.email,values.password)
+         .then(response => {
+             console.log(response.user)
+         })
+         .catch(error => {
+             console.log(error.message)
+         })
     };
     onReset = () => {
         this.formRef.current.resetFields();
@@ -35,19 +43,8 @@ export default class FormComponent extends React.Component {
         };
 
         return (
-            <div>
+            <div style={{padding: "100px"}}>
                 <Form {...layout} name="control-ref" ref={this.formRef} onFinish={this.onFinish} validateMessages={validateMessages}>
-                    <Form.Item
-                        name="name"
-                        label="Name"
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
                     <Form.Item
                         name="email"
                         label="Email"
@@ -60,17 +57,15 @@ export default class FormComponent extends React.Component {
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        name="age"
-                        label="Age"
+                        name="password"
+                        label="Password"
                         rules={[
                             {
-                                type: 'number',
-                                min: 0,
-                                max: 99,
+                                required: true,
                             },
                         ]}
                     >
-                        <InputNumber />
+                        <Input />
                     </Form.Item>
                     <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
                         <Button type="primary" htmlType="submit">

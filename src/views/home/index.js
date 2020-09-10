@@ -1,7 +1,11 @@
 import React from 'react';
 import _ from 'lodash';
 import {Table} from 'antd';
+import { Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import "./index.css";
+import {Link} from "react-router-dom";
+
 
 export default class HomeComponent extends React.Component {
     constructor(props){
@@ -9,7 +13,7 @@ export default class HomeComponent extends React.Component {
         this.state = {
             messages: []
         };
-        let app = this.props.db.database().ref('user');
+        let app = this.props.firebase.database().ref('user');
         app.on('value', snapshot => {
             this.getData(snapshot.val());
         });
@@ -54,7 +58,15 @@ export default class HomeComponent extends React.Component {
             }
         ];
         return (
-            <div className="row" style={{ "padding-left": "100px", "padding-right": "100px"}}>
+            <div className="row">
+                <div className="btn-end">
+                    <Link to="/member-create">
+                        <Button type="primary" shape="round" icon={<PlusOutlined />} >
+                            เพิ่มสมาชิก
+                        </Button>
+                    </Link>
+
+                </div>
                 <Table
                     dataSource={this.state.messages}
                     rowKey={record => record._key}
